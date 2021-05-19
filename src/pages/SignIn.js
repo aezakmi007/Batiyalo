@@ -18,8 +18,6 @@ function SignIn() {
     } catch (err) {
       Alert.error(err.message, 4000);
     }
-
-    console.log(result);
   };
   const onFaceBookSignIn = () => {
     signInProvider(new firebase.auth.FacebookAuthProvider());

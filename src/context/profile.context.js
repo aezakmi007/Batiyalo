@@ -41,10 +41,11 @@ export const ProfileProvider = ({ children }) => {
     };
   }, []);
   return (
-    <ProfileContext.Provider vlaue={{ isLoading, profile }}>
+    <ProfileContext.Provider value={{ profile, isLoading }}>
       {children}
     </ProfileContext.Provider>
   );
 };
 
-export const useProfile = () => useContext(ProfileContext);
+const useProfile = () => useContext(ProfileContext);
+export default useProfile;
