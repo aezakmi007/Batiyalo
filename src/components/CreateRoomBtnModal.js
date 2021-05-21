@@ -11,8 +11,8 @@ import {
   Schema,
 } from 'rsuite';
 import firebase from 'firebase/app';
-import useProfile from '../context/profile.context';
 import { database } from '../misc/firebase';
+import useModalState from '../misc/custom-hooks';
 
 const { StringType } = Schema.Types;
 
@@ -27,7 +27,7 @@ const INITIAL_FORM = {
 };
 
 function CreateRoomBtnModal() {
-  const { isOpen, open, close } = useProfile();
+  const { isOpen, open, close } = useModalState();
   const [formValue, setFormValue] = useState(INITIAL_FORM);
   const [isLoading, setIsLoading] = useState(false);
   const formRef = useRef();

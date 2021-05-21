@@ -6,10 +6,10 @@ import { auth, database } from '../misc/firebase';
 function SignIn() {
   const signInProvider = async provider => {
     try {
-      const { additionalUserInfo, user } = auth.signInWithPopup(provider);
+      const { additionalUserInfo, user } = await auth.signInWithPopup(provider);
 
       if (additionalUserInfo.isNewUser) {
-        await database.ref(`/profiles/${user.id}`).set({
+        await database.ref(`/profiles/${user.uid}`).set({
           name: user.displayName,
           createdAt: firebase.database.ServerValue.TIMESTAMP,
         });

@@ -11,7 +11,7 @@ const fileInputTypes = '.png, .jpeg, .jpg';
 const acceptedFileTypes = ['image/png', 'image/jpeg', 'image/pjpeg'];
 
 const isValidFile = file => {
-  acceptedFileTypes.includes(file.type);
+  return acceptedFileTypes.includes(file.type);
 };
 
 const getBlob = canvas => {
@@ -95,6 +95,7 @@ function AvatarUploadbtn() {
             className="d-none"
             accept={fileInputTypes}
             onChange={onFileInputChange}
+            id="#avatar-upload"
           />
         </label>
         <Modal show={isOpen} onHide={close}>

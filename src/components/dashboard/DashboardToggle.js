@@ -11,7 +11,8 @@ function DashboardToggle() {
   const onSignOut = useCallback(() => {
     auth.signOut();
     Alert.info('signed out', 4000);
-  }, close()[close]);
+    close();
+  }, [close]);
   return (
     <>
       <Button block color="blue" onClick={open}>
