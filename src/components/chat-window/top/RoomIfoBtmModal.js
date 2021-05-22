@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Button, Modal } from 'rsuite';
 import { useCurrentRoom } from '../../../context/current-room.context';
 import useModalState from '../../../misc/custom-hooks';
@@ -31,4 +31,4 @@ function RoomIfoBtmModal() {
   );
 }
 
-export default RoomIfoBtmModal;
+export default memo(RoomIfoBtmModal);
