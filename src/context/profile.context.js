@@ -40,21 +40,19 @@ export const ProfileProvider = ({ children }) => {
           setIsLoading(false);
         });
 
-        database()
-          .ref('.info/connected')
-          .on('value', snapshot => {
-            // If we're not currently connected, don't do anything.
-            if (snapshot.val() === false) {
-              return;
-            }
+        database.ref('.info/connected').on('value', snapshot => {
+          // If we're not currently connected, don't do anything.
+          if (!!snapshot.val() === false) {
+            return;
+          }
 
-            userStatusRef
-              .onDisconnect()
-              .set(isOfflineForDatabase)
-              .then(() => {
-                userStatusRef.set(isOnlineForDatabase);
-              });
-          });
+          userStatusRef
+            .onDisconnect()
+            .set(isOfflineForDatabase)
+            .then(() => {
+              userStatusRef.set(isOnlineForDatabase);
+            });
+        });
       } else {
         if (useRef) {
           useRef.off();
@@ -63,14 +61,14 @@ export const ProfileProvider = ({ children }) => {
         if (userStatusRef) {
           userStatusRef.off();
         }
-        database().ref('.info/connected').off();
+        database.ref('.info/connected').off();
         setProfile(null);
         setIsLoading(false);
       }
     });
     return () => {
       authUnsub();
-      database().ref('.info/connected');
+      database.ref('.info/connected');
 
       if (useRef) {
         useRef.off();
