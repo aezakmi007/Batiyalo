@@ -14,7 +14,7 @@ const getColor = presence => {
     case 'offline':
       return 'red';
     default:
-      return null;
+      return 'gray';
   }
 };
 
