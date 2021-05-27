@@ -4,6 +4,7 @@ import { ButtonToolbar, Icon } from 'rsuite';
 
 import { useCurrentRoom } from '../../../context/current-room.context';
 import { useMediaQuery } from '../../../misc/custom-hooks';
+import EditRoomBtnDrawer from './EditRoomBtnDrawer';
 import RoomIfoBtmModal from './RoomIfoBtmModal';
 
 function ChatTop() {
@@ -28,6 +29,7 @@ function ChatTop() {
           <span className="text-disappear">{name}</span>
         </h4>
         <ButtonToolbar className="ws-nowrap">todo</ButtonToolbar>
+        <EditRoomBtnDrawer />
       </div>
 
       <div className="d-flex justify-content-between align-items-center">
