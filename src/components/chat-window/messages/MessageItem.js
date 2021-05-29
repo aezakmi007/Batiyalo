@@ -2,24 +2,28 @@ import React, { memo } from 'react';
 import { Button } from 'rsuite';
 import TimeAgo from 'timeago-react';
 import { useCurrentRoom } from '../../../context/current-room.context';
-import { useHover } from '../../../misc/custom-hooks';
+import { useHover, useMediaQuery } from '../../../misc/custom-hooks';
 import { auth } from '../../../misc/firebase';
 import Presence from '../../Presence';
 import ProfileAvatar from '../../ProfileAvatar';
 import IconBtnControl from './IconBtnControl';
 import ProfileInfoBtnModal from './ProfileInfoBtnModal';
 
-function MessageItem({ message, handleAdmin }) {
-  const { author, createdAt, text } = message;
+function MessageItem({ message, handleAdmin, handelLike }) {
+  const { author, createdAt, text, likes, likeCount } = message;
 
   const isAdmin = useCurrentRoom(v => v.isAdmin);
   const admins = useCurrentRoom(v => v.admins);
 
   const [selfRef, isHover] = useHover();
+  const isMobile = useMediaQuery('(max-width:992px)');
+
   const isMsgAuthorAdmin = admins.includes(author.uid);
   const isAuthor = auth.currentUser.uid === author.uid;
-
   const canGrantAccess = isAdmin && !isAuthor;
+
+  const canShowIcons = isMobile || isHover;
+  const isLiked = likes && Object.keys(likes).includes(auth.currentUser.uid);
 
   return (
     <li
@@ -54,12 +58,12 @@ function MessageItem({ message, handleAdmin }) {
           className="font-normal text-black-45 ml-2"
         />
         <IconBtnControl
-          {...(true ? { color: 'red' } : {})}
-          isVisible
+          {...(isLiked ? { color: 'red' } : {})}
+          isVisible={canShowIcons}
           iconName="heart"
           tooltip="Like this message"
-          onClick={() => {}}
-          badgeContent={5}
+          onClick={() => handelLike(message.id)}
+          badgeContent={likeCount}
         />
       </div>
       <div>
