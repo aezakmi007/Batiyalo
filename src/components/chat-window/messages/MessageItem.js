@@ -9,7 +9,7 @@ import ProfileAvatar from '../../ProfileAvatar';
 import IconBtnControl from './IconBtnControl';
 import ProfileInfoBtnModal from './ProfileInfoBtnModal';
 
-function MessageItem({ message, handleAdmin, handelLike }) {
+function MessageItem({ message, handleAdmin, handeleDelete, handelLike }) {
   const { author, createdAt, text, likes, likeCount } = message;
 
   const isAdmin = useCurrentRoom(v => v.isAdmin);
@@ -65,6 +65,14 @@ function MessageItem({ message, handleAdmin, handelLike }) {
           onClick={() => handelLike(message.id)}
           badgeContent={likeCount}
         />
+        {isAuthor && (
+          <IconBtnControl
+            isVisible={canShowIcons}
+            iconName="close"
+            tooltip="Delete this message"
+            onClick={() => handeleDelete(message.id)}
+          />
+        )}
       </div>
       <div>
         <span className="word-break-all">{text}</span>
