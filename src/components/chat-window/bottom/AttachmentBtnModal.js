@@ -41,7 +41,7 @@ function AttachmentBtnModal({ afterUpload }) {
         };
       });
 
-      const files = await Promise.add(shapePromises);
+      const files = await Promise.all(shapePromises);
       await afterUpload(files);
       setIsLoading(false);
       close();
