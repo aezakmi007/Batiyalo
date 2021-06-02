@@ -24,7 +24,7 @@ function AudioMessageBtn({ afterUpload }) {
           });
 
         const file = {
-          contentType: (await snap).metadata.contentType,
+          contentType: await snap.metadata.contentType,
           name: snap.metadata.name,
           url: await snap.ref.getDownloadURL(),
         };
@@ -47,7 +47,7 @@ function AudioMessageBtn({ afterUpload }) {
       <Icon icon="microphone" />
       <ReactMic
         record={isRecording}
-        className="display-none"
+        className="d-none"
         onStop={onUpload}
         mimeType="audio/mp3"
       />

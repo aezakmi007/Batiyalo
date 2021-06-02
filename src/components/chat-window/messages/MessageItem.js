@@ -10,20 +10,20 @@ import IconBtnControl from './IconBtnControl';
 import ImageBtnModal from './ImageBtnModal';
 import ProfileInfoBtnModal from './ProfileInfoBtnModal';
 
-const renderFileMessage = files => {
-  if (files.contentType.include('image')) {
+const renderFileMessage = file => {
+  if (file.contentType.includes('image')) {
     return (
       <div className="height-220">
-        <ImageBtnModal src={files.url} filename={files.name} />
+        <ImageBtnModal src={file.url} filename={file.name} />
       </div>
     );
   }
 
-  return <a href={files.url}>Download {files.name}</a>;
+  return <a href={file.url}>Download {file.name}</a>;
 };
 
 function MessageItem({ message, handleAdmin, handeleDelete, handelLike }) {
-  const { author, createdAt, text, files, likes, likeCount } = message;
+  const { author, createdAt, text, file, likes, likeCount } = message;
 
   const isAdmin = useCurrentRoom(v => v.isAdmin);
   const admins = useCurrentRoom(v => v.admins);
@@ -89,7 +89,7 @@ function MessageItem({ message, handleAdmin, handeleDelete, handelLike }) {
       </div>
       <div>
         {text && <span className="word-break-all">{text}</span>}
-        {files && renderFileMessage(files)}
+        {file && renderFileMessage(file)}
       </div>
     </li>
   );
