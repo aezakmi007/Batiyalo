@@ -56,7 +56,7 @@ function Messages() {
     setTimeout(() => {
       const newHeight = node.scrollHeight;
       node.scrollTop = newHeight - oldHeight;
-    }, 200);
+    }, 500);
   }, [loadMessages, limit]);
 
   useEffect(() => {
@@ -66,7 +66,7 @@ function Messages() {
 
     setTimeout(() => {
       node.scrollTop = node.scrollHeight;
-    }, 200);
+    }, 500);
 
     return () => {
       messageRef.off('value');
@@ -120,7 +120,7 @@ function Messages() {
       return msg;
     });
     Alert.info(alertMsg, 4000);
-  });
+  }, []);
 
   const handeleDelete = useCallback(
     async (msgId, file) => {

@@ -11,7 +11,8 @@ function AudioMessageBtn({ afterUpload }) {
 
   const onClick = useCallback(() => {
     setIsRecording(prev => !prev);
-  });
+  }, []);
+
   const onUpload = useCallback(
     async data => {
       setIsUploading(true);

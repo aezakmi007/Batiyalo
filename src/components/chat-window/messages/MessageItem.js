@@ -67,7 +67,7 @@ function MessageItem({ message, handleAdmin, handeleDelete, handelLike }) {
           className="p-0 ml-1 text-black"
         >
           {canGrantAccess && (
-            <Button block onClick={() => handleAdmin(author.uid)} color="blue ">
+            <Button block onClick={() => handleAdmin(author.uid)} color="blue">
               {isMsgAuthorAdmin
                 ? 'Remove admin permission'
                 : 'Give admin in this Room'}

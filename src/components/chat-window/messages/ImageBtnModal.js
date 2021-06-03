@@ -17,13 +17,13 @@ function ImageBtnModal({ src, filename }) {
         <Modal.Header>
           <Modal.Title>{filename}</Modal.Title>
         </Modal.Header>
-        <Modal.Boady>
+        <Modal.Body>
           <div>
             <img src={src} height="100%" width="100%" alt="file" />
           </div>
-        </Modal.Boady>
+        </Modal.Body>
         <Modal.Footer>
-          <a href={src} target="blank" rel="noopener noreferre">
+          <a href={src} target="_blank" rel="noopener noreferrer">
             View Original
           </a>
         </Modal.Footer>
