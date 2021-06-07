@@ -6,7 +6,7 @@ const admin = require('firebase-admin');
 const database = admin.database();
 const messaging = admin.messaging();
 
-exports.sendFcm = functions.https.onCall(async (data, context) => {
+exports.sendFcm = functions.region('europe-west3').https.onCall(async (data, context) => {
   checkIfAuth(context);
   const { chatId, title, message } = data;
 
@@ -20,7 +20,7 @@ exports.sendFcm = functions.https.onCall(async (data, context) => {
 
   checkIfAllowed(context, transformToArr(roomData.admins));
 
-  const fcmUsers = transformToArr(fcmUsers);
+  const fcmUsers = transformToArr(roomData.fcmUsers);
 
   const userTokensPromises = fcmUsers.map(uid => getUserTokens(uid));
 
@@ -40,7 +40,7 @@ exports.sendFcm = functions.https.onCall(async (data, context) => {
       title: `${title} (${roomData.name})`,
       body: message,
     },
-    tokens: tokens,
+    tokens,
   };
 
   const batchResponse = await messaging.sendMulticat(fcmMessage);
@@ -65,7 +65,7 @@ function checkIfAuth(context) {
   if (!context.auth) {
     throw new functions.https.HttpsError(
       'unauthenticated',
-      'You have to signed in'
+      'You have to be signed in'
     );
   }
 }

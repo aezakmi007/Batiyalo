@@ -6,6 +6,7 @@ import { useCurrentRoom } from '../../../context/current-room.context';
 import { useMediaQuery } from '../../../misc/custom-hooks';
 import EditRoomBtnDrawer from './EditRoomBtnDrawer';
 import RoomIfoBtmModal from './RoomIfoBtmModal';
+import SendFcmBtnModal from './SendFcmBtnModal';
 
 function ChatTop() {
   const name = useCurrentRoom(v => v.name);
@@ -34,7 +35,7 @@ function ChatTop() {
       </div>
 
       <div className="d-flex justify-content-between align-items-center">
-        <span>todo</span>
+        {isAdmin && <SendFcmBtnModal />}
         <RoomIfoBtmModal />
       </div>
     </div>

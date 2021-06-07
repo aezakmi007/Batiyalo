@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import firebase from 'firebase/app';
-import { auth, database } from '../misc/firebase';
+import { auth, database, messaging, fcmVapidKey } from '../misc/firebase';
 
 export const isOfflineForDatabase = {
   state: 'offline',
@@ -21,8 +21,9 @@ export const ProfileProvider = ({ children }) => {
   useEffect(() => {
     let useRef;
     let userStatusRef;
+    let tokenRefreshUnsub;
 
-    const authUnsub = auth.onAuthStateChanged(authObj => {
+    const authUnsub = auth.onAuthStateChanged(async authObj => {
       if (authObj) {
         console.log(authObj.uid);
         userStatusRef = database.ref(`/status/${authObj.uid}`);
@@ -54,6 +55,36 @@ export const ProfileProvider = ({ children }) => {
               userStatusRef.set(isOnlineForDatabase);
             });
         });
+
+        if (messaging) {
+          try {
+            // const currentToken = await messaging.getToken();
+            const currentToken = await messaging.getToken({
+              vapidKey: fcmVapidKey,
+            });
+            if (currentToken) {
+              await database
+                .ref(`/fcm_tokens/${currentToken}`)
+                .set(authObj.uid);
+            }
+          } catch (err) {
+            console.log('An error occurred while retrieving token. ', err);
+            // ...
+          }
+
+          tokenRefreshUnsub = messaging.onTokenRefresh(async () => {
+            try {
+              const currentToken = await messaging.getToken();
+              if (currentToken) {
+                await database
+                  .ref(`/fcm_tokens/${currentToken}`)
+                  .set(authObj.uid);
+              }
+            } catch (err) {
+              console.log('An error occurred while retrieving token. ', err);
+            }
+          });
+        }
       } else {
         if (useRef) {
           useRef.off();
@@ -61,6 +92,9 @@ export const ProfileProvider = ({ children }) => {
 
         if (userStatusRef) {
           userStatusRef.off();
+        }
+        if (tokenRefreshUnsub) {
+          tokenRefreshUnsub();
         }
         database.ref('.info/connected').off();
         setProfile(null);
@@ -73,6 +107,9 @@ export const ProfileProvider = ({ children }) => {
 
       if (useRef) {
         useRef.off();
+      }
+      if (tokenRefreshUnsub) {
+        tokenRefreshUnsub();
       }
       if (userStatusRef) {
         userStatusRef.off();
