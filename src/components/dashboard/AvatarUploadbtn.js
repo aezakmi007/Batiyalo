@@ -85,7 +85,7 @@ function AvatarUploadbtn() {
       Alert.error(err.message, 4000);
     }
 
-    canvas.toBlob();
+    // canvas.toBlob();
   };
   return (
     <div className="mt-3 text-center">
@@ -105,7 +105,7 @@ function AvatarUploadbtn() {
             className="d-none"
             accept={fileInputTypes}
             onChange={onFileInputChange}
-            id="#avatar-upload"
+            id="avatar-upload"
           />
         </label>
         <Modal show={isOpen} onHide={close}>
