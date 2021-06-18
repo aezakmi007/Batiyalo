@@ -24,7 +24,7 @@ exports.sendFcm = functions
 
     const fcmUsers = transformToArr(roomData.fcmUsers);
 
-    const userTokensPromises = fcmUsers.map(uid => getUserTokens(uid));
+    const userTokenPromises = fcmUsers.map(uid => getUserTokens(uid));
 
     const userTokenResults = await Promise.all(userTokenPromises);
 

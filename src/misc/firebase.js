@@ -28,10 +28,6 @@ export const messaging = firebase.messaging.isSupported
   : null;
 
 if (messaging) {
-  messaging.usePublicVapidKey(
-    'BOYGpSoKmh5rjDfKy-a3AwzceaiIdOvxtss4pMi7XEYluWIGC170ZYnpvtZ-HyuskH_2_AZbem1fEvsE2Zhx7EE'
-  );
-
   messaging.onMessage(({ notification }) => {
     const { title, body } = notification;
     Toast.info({ title, description: body, duration: 0 });
@@ -40,6 +36,5 @@ if (messaging) {
 }
 
 if (isLocalhost) {
-  functions.useFunctionsEmulator('http://localhost:5001');
   functions.useEmulator('localhost', 5001);
 }
